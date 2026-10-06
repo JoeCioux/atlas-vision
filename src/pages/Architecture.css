@@ -1,0 +1,29 @@
+.architecture-page-container {
+  padding-top: var(--spacing-16);
+  padding-bottom: var(--spacing-32);
+}
+
+.arch-header {
+  text-align: center;
+  margin-bottom: var(--spacing-24);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-text-primary);
+}
+
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.architecture-flow-section {
+  margin-bottom: var(--spacing-32);
+  width: 100%;
+}

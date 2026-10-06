@@ -1,0 +1,429 @@
+.iso-architecture-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .iso-architecture-container {
+    flex-direction: row;
+    align-items: stretch;
+    height: 600px;
+  }
+}
+
+/* LEFT: Step Navigator */
+.step-navigator {
+  flex: 0 0 350px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-4) 0;
+  overflow-y: auto;
+}
+
+.nav-timeline-line {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 11px;
+  width: 2px;
+  background-color: var(--color-border-hairline);
+  z-index: 1;
+}
+
+.nav-step-item {
+  position: relative;
+  z-index: 2;
+  margin-bottom: var(--spacing-2);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-3) 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+}
+
+.step-header:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.step-marker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-bg-primary);
+  border: 2px solid var(--color-border-hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-4);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.marker-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all var(--transition-fast);
+}
+
+.nav-step-item.active .step-marker {
+  border-color: var(--color-accent);
+}
+
+.nav-step-item.active .marker-inner {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(0, 135, 81, 0.5);
+}
+
+.step-title-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.step-number {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+}
+
+.nav-step-item.active .step-number {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.step-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+.nav-step-item.active .step-label {
+  color: var(--color-accent);
+}
+
+.step-chevron {
+  color: var(--color-text-tertiary);
+  margin-left: var(--spacing-3);
+  margin-right: var(--spacing-2);
+}
+
+.chevron-icon {
+  transition: transform var(--transition-normal);
+}
+
+.chevron-icon.open {
+  transform: rotate(180deg);
+}
+
+.nav-step-item.active .step-header {
+  background-color: rgba(0, 135, 81, 0.05);
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--spacing-3);
+  margin-left: calc(-1 * var(--spacing-3));
+}
+
+.step-content {
+  overflow: hidden;
+}
+
+.step-content-inner {
+  padding-left: 40px; 
+  padding-bottom: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+.step-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* RIGHT: Isometric Diagram Area */
+.iso-diagram-area {
+  flex: 1;
+  /* Replaced dark block with a light glass frame */
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--color-border-hairline);
+  box-shadow: inset 0 1px 0 var(--color-border-inner), var(--shadow-sm);
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iso-scene {
+  position: relative;
+  width: 600px;
+  height: 500px;
+  transform: scale(0.5);
+  transform-origin: center center;
+}
+
+@media (min-width: 768px) {
+  .iso-scene {
+    transform: scale(0.7);
+  }
+}
+
+@media (min-width: 1024px) {
+  .iso-scene {
+    transform: scale(0.8);
+  }
+}
+
+@media (min-width: 1280px) {
+  .iso-scene {
+    transform: scale(1);
+  }
+}
+
+/* Isometric projection variables */
+:root {
+  --iso-x: -30deg;
+  --iso-y: 30deg;
+}
+
+/* Planes */
+.iso-plane {
+  position: absolute;
+  transform: rotateX(60deg) rotateZ(-45deg);
+  border: 1px dashed rgba(15, 18, 34, 0.1);
+  border-radius: 8px;
+  background-color: rgba(15, 18, 34, 0.02);
+  pointer-events: none;
+}
+
+.layer-vision {
+  width: 250px;
+  height: 250px;
+  top: 250px;
+  left: 50px;
+}
+
+.layer-language {
+  width: 350px;
+  height: 350px;
+  top: 50px;
+  left: 200px;
+}
+
+.plane-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+/* Nodes and Cubes */
+.iso-node {
+  position: absolute;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.iso-node.dim {
+  opacity: 0.55;
+  filter: grayscale(100%);
+}
+
+.iso-node.highlight {
+  opacity: 1;
+  filter: drop-shadow(0 8px 16px rgba(0, 135, 81, 0.2));
+  z-index: 10;
+}
+
+.node-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--color-border-hairline);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Basic Cube Construction */
+.iso-cube {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+}
+
+.cube-top {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255,255,255,0.9);
+  transform: rotateX(60deg) rotateZ(-45deg) translateZ(30px);
+  border: 1px solid rgba(15,18,34,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cube-left {
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  background-color: rgba(230,230,230,0.9);
+  transform: rotateX(60deg) rotateZ(-45deg) rotateX(-90deg) translateZ(30px) translateY(15px);
+  border: 1px solid rgba(15,18,34,0.1);
+}
+
+.cube-right {
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  background-color: rgba(210,210,210,0.9);
+  transform: rotateX(60deg) rotateZ(-45deg) rotateY(90deg) translateZ(30px) translateY(15px);
+  border: 1px solid rgba(15,18,34,0.1);
+}
+
+/* Active node specific (accent) */
+.active-node .cube-top { background-color: rgba(0, 135, 81, 0.9); }
+.active-node .cube-left { background-color: rgba(0, 115, 65, 0.9); }
+.active-node .cube-right { background-color: rgba(0, 95, 55, 0.9); }
+
+/* Large Cube (N-ATLAS) */
+.large-cube { width: 80px; height: 80px; }
+.large-cube .cube-top { width: 80px; height: 80px; transform: rotateX(60deg) rotateZ(-45deg) translateZ(40px); }
+.large-cube .cube-left { width: 80px; height: 40px; transform: rotateX(60deg) rotateZ(-45deg) rotateX(-90deg) translateZ(40px) translateY(20px); }
+.large-cube .cube-right { width: 80px; height: 40px; transform: rotateX(60deg) rotateZ(-45deg) rotateY(90deg) translateZ(40px) translateY(20px); }
+
+/* Flat Cube (Stage A/B) */
+.flat-cube { width: 50px; height: 50px; }
+.flat-cube .cube-top { width: 50px; height: 50px; transform: rotateX(60deg) rotateZ(-45deg) translateZ(10px); }
+.flat-cube .cube-left { width: 50px; height: 10px; transform: rotateX(60deg) rotateZ(-45deg) rotateX(-90deg) translateZ(10px) translateY(5px); }
+.flat-cube .cube-right { width: 50px; height: 10px; transform: rotateX(60deg) rotateZ(-45deg) rotateY(90deg) translateZ(10px) translateY(5px); }
+
+.cube-text {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: var(--color-text-primary);
+  transform: rotate(45deg); 
+}
+.cube-icon {
+  color: var(--color-text-primary);
+  transform: rotate(45deg);
+}
+
+.trained-node .cube-text, .trained-node .cube-icon {
+  color: white;
+}
+
+/* Node Positions in Scene */
+.node-image { top: 380px; left: 100px; }
+.node-siglip { top: 280px; left: 180px; }
+.node-mlp { top: 200px; left: 260px; }
+.node-natlas { top: 120px; left: 340px; }
+.node-stagea { top: 90px; left: 450px; }
+.node-stageb { top: 180px; left: 480px; }
+.node-target { top: 280px; left: 510px; }
+
+/* Paths / Connectors */
+.iso-path {
+  position: absolute;
+  border-top: 2px dashed rgba(15, 18, 34, 0.15);
+  transform-origin: left center;
+  z-index: 1;
+}
+
+.iso-path.active-path {
+  border-top: 2px solid var(--color-accent);
+  box-shadow: 0 0 10px rgba(0, 135, 81, 0.2);
+}
+
+.path-img-siglip { top: 400px; left: 130px; width: 80px; transform: rotate(-35deg); }
+.path-siglip-mlp { top: 300px; left: 210px; width: 80px; transform: rotate(-35deg); }
+.path-mlp-natlas { top: 220px; left: 290px; width: 80px; transform: rotate(-35deg); }
+.path-natlas-stagea { top: 140px; left: 400px; width: 60px; transform: rotate(15deg); }
+.path-stagea-stageb { top: 120px; left: 470px; width: 100px; transform: rotate(60deg); }
+.path-stageb-target { top: 210px; left: 500px; width: 80px; transform: rotate(60deg); }
+
+.inline { display: inline-block; }
+
+/* Idle Mode Animations */
+@media (prefers-reduced-motion: no-preference) {
+  .iso-diagram-area.idle-mode {
+    animation: diagram-breathe 4s ease-in-out infinite alternate;
+  }
+  
+  .iso-diagram-area.idle-mode::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 55%
+    );
+    animation: diagram-shimmer 8s infinite linear;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .idle-mode .iso-node {
+    animation: idle-node-pulse 8s infinite;
+  }
+  
+  .idle-mode .node-image { animation-delay: 0s; }
+  .idle-mode .node-siglip { animation-delay: 1s; }
+  .idle-mode .node-mlp { animation-delay: 2s; }
+  .idle-mode .node-natlas { animation-delay: 3s; }
+  .idle-mode .node-stagea { animation-delay: 4s; }
+  .idle-mode .node-stageb { animation-delay: 5s; }
+  .idle-mode .node-target { animation-delay: 6s; }
+
+  .idle-mode .iso-path {
+    border-top: 2px dashed rgba(0, 135, 81, 0.3);
+    animation: idle-data-flow 2s linear infinite;
+  }
+}
+
+@keyframes diagram-breathe {
+  0% { box-shadow: inset 0 1px 0 var(--color-border-inner), var(--shadow-sm); }
+  100% { box-shadow: inset 0 1px 0 var(--color-border-inner), 0 10px 40px rgba(0, 135, 81, 0.08); }
+}
+
+@keyframes diagram-shimmer {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+}
+
+@keyframes idle-node-pulse {
+  0%, 15%, 100% { filter: grayscale(100%); opacity: 0.5; transform: scale(1); }
+  5% { filter: drop-shadow(0 8px 16px rgba(0, 135, 81, 0.4)); opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes idle-data-flow {
+  0% { stroke-dashoffset: 10; }
+  100% { stroke-dashoffset: 0; }
+}

@@ -1,0 +1,128 @@
+.atlas-core-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.core-system {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.globe-motif {
+  position: absolute;
+  opacity: 0.3;
+  animation: slow-spin 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.core-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed var(--color-border-strong);
+  z-index: 1;
+}
+
+.outer-ring {
+  width: 250px;
+  height: 250px;
+}
+
+.inner-ring {
+  width: 150px;
+  height: 150px;
+}
+
+.core-center {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--color-bg-primary);
+  border: 2px solid var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 0 30px var(--color-accent-light);
+}
+
+.data-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -6px;
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(125px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(125px) rotate(-360deg); }
+}
+
+.core-label {
+  position: absolute;
+  padding: 6px 12px;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-soft);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.input-bubble {
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.english-bubble {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.target-bubbles {
+  position: absolute;
+  right: -50px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  z-index: 20;
+}
+
+.igbo-bubble { position: relative; }
+.hausa-bubble { position: relative; left: 20px; }
+.yoruba-bubble { position: relative; }
+
+@media (max-width: 768px) {
+  .core-system {
+    width: 250px;
+    height: 250px;
+  }
+  .input-bubble { left: 0; }
+  .target-bubbles { right: -20px; }
+  .hausa-bubble { left: 10px; }
+}
