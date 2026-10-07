@@ -22,7 +22,7 @@
 
 /* Hero Section */
 .hero-section {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
   display: flex;
   align-items: center;
   position: relative;
@@ -59,14 +59,43 @@
   line-height: 1.6;
 }
 
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  width: 100%;
+}
+
+.hero-actions .btn-primary, .hero-actions .btn-secondary {
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-actions {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+  }
+  .hero-actions .btn-primary, .hero-actions .btn-secondary {
+    width: auto;
+  }
+}
+
 /* Demo Card in Hero */
 .hero-demo-card {
   border-radius: var(--radius-xl);
   padding: var(--spacing-4);
-  max-width: 440px;
+  max-width: 100%;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero-demo-card {
+    max-width: 440px;
+  }
 }
 
 .hero-demo-card::before {
@@ -129,6 +158,7 @@
   border-radius: var(--radius-sm);
   padding: var(--spacing-3);
   min-height: 100px;
+  overflow-x: auto;
 }
 
 .demo-typing-text {
@@ -227,6 +257,12 @@
 
 @media (min-width: 768px) {
   .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -254,6 +290,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.gallery-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gallery-caption .lang-badge {
+  margin-top: 2px;
+}
+
+.gallery-caption span:not(.lang-badge) {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: clamp(14px, 4vw, 15px);
+  line-height: 1.6;
+  letter-spacing: normal;
+  font-family: var(--font-body);
 }
 
 .gallery-img-overlay {
@@ -308,6 +364,11 @@
 
 .p-12 { padding: var(--spacing-12); }
 .rounded-2xl { border-radius: var(--radius-lg); }
-.text-3xl { font-size: 2.5rem; font-family: var(--font-heading); }
+.text-3xl { 
+  font-size: clamp(1.5rem, 5.5vw, 2.5rem); 
+  font-family: var(--font-heading); 
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
 .self-start { align-self: flex-start; }
 .bg-secondary { background-color: var(--color-bg-secondary); }

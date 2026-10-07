@@ -187,8 +187,8 @@ const Overview = () => {
                   <span className="tech-label text-white">MARKET SCENE</span>
                 </div>
               </div>
-              <div className="gallery-caption mono text-secondary mt-3 flex gap-2 items-start text-left">
-                <span className="lang-badge flex-shrink-0" style={{ backgroundColor: 'rgba(52, 168, 83, 0.1)', color: 'var(--color-lang-ig)', borderColor: 'var(--color-lang-ig)' }}>IG</span>
+              <div className="gallery-caption text-secondary mt-3">
+                <span className="lang-badge" style={{ backgroundColor: 'rgba(52, 168, 83, 0.1)', color: 'var(--color-lang-ig)', borderColor: 'var(--color-lang-ig)' }}>IG</span>
                 <span>Ahịa mepere emepe ebe ndị na-ere ahịa na-ere mkpụrụ osisi...</span>
               </div>
             </div>
@@ -199,8 +199,8 @@ const Overview = () => {
                   <span className="tech-label text-white">TEXTILE / FASHION</span>
                 </div>
               </div>
-              <div className="gallery-caption mono text-secondary mt-3 flex gap-2 items-start text-left">
-                <span className="lang-badge flex-shrink-0" style={{ backgroundColor: 'rgba(235, 122, 52, 0.1)', color: 'var(--color-lang-yo)', borderColor: 'var(--color-lang-yo)' }}>YO</span>
+              <div className="gallery-caption text-secondary mt-3">
+                <span className="lang-badge" style={{ backgroundColor: 'rgba(235, 122, 52, 0.1)', color: 'var(--color-lang-yo)', borderColor: 'var(--color-lang-yo)' }}>YO</span>
                 <span>Aṣọ aláràbarà tí a hun pẹ̀lú ọgbọ́n iṣẹ́ ọnà ìbílẹ̀...</span>
               </div>
             </div>
@@ -211,8 +211,8 @@ const Overview = () => {
                   <span className="tech-label text-white">EVERYDAY TRANSPORT</span>
                 </div>
               </div>
-              <div className="gallery-caption mono text-secondary mt-3 flex gap-2 items-start text-left">
-                <span className="lang-badge flex-shrink-0" style={{ backgroundColor: 'rgba(66, 133, 244, 0.1)', color: 'var(--color-lang-ha)', borderColor: 'var(--color-lang-ha)' }}>HA</span>
+              <div className="gallery-caption text-secondary mt-3">
+                <span className="lang-badge" style={{ backgroundColor: 'rgba(66, 133, 244, 0.1)', color: 'var(--color-lang-ha)', borderColor: 'var(--color-lang-ha)' }}>HA</span>
                 <span>Babura da ke ɗaukar fasinjoji a kan titi mai cike da mutane...</span>
               </div>
             </div>
@@ -226,7 +226,7 @@ const Overview = () => {
           <div className="split-layout">
             <div className="split-content flex-col justify-center">
               <h3 className="mb-4 text-3xl">ONE INTERFACE. TWO WORLDS.</h3>
-              <p className="text-secondary mb-8">Explore the vision-language cascade programmatically. Atlas Vision provides a unified programmatic interface to interact with the underlying cascade.</p>
+              <p className="text-secondary mb-8">Explore the end-to-end pipeline programmatically. Atlas Vision provides a unified interface to interact with the vision-to-language process.</p>
               <Link to="/architecture" className="btn-secondary self-start">View Architecture</Link>
             </div>
             <div className="split-visual">
@@ -241,7 +241,7 @@ const Overview = () => {
         <div className="container">
           <div className="final-cta-content glass-panel p-12 text-center rounded-2xl">
             <h2 className="mb-4">GIVE IT SOMETHING TO SEE.</h2>
-            <p className="text-secondary text-lg mb-8">Explore Atlas Vision and experience the cascade.</p>
+            <p className="text-secondary text-lg mb-8">Explore Atlas Vision and experience the seamless translation pipeline.</p>
             <div className="flex justify-center">
               <Link to="/playground" className="btn-primary">
                 Open Playground

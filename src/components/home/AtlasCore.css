@@ -118,11 +118,12 @@
 .yoruba-bubble { position: relative; }
 
 @media (max-width: 768px) {
-  .core-system {
-    width: 250px;
-    height: 250px;
+  .atlas-core-container {
+    transform: scale(0.85);
   }
-  .input-bubble { left: 0; }
-  .target-bubbles { right: -20px; }
-  .hausa-bubble { left: 10px; }
+}
+@media (max-width: 480px) {
+  .atlas-core-container {
+    transform: scale(0.65);
+  }
 }

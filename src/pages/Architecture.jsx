@@ -8,7 +8,7 @@ const Architecture = () => {
       <div className="container architecture-page-container">
         
         <header className="arch-header">
-          <h1 className="section-title">THE ATLAS CASCADE</h1>
+          <h1 className="section-title">HOW ATLAS SEES AND SPEAKS</h1>
           <p className="section-subtitle">Bridging vision and Nigerian languages through an optimized pipeline.</p>
         </header>
 

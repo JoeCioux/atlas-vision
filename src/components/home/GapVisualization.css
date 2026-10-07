@@ -1,5 +1,5 @@
 .gap-vis-container {
-  min-height: 70vh;
+  min-height: 70dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,13 +29,12 @@
   align-items: center;
   justify-content: center;
   margin-bottom: var(--spacing-24);
-  width: 100%;
-  max-width: 600px;
+  width: min(100%, 420px);
 }
 
 .node {
-  width: 110px;
-  height: 110px;
+  width: min(30vw, 110px);
+  aspect-ratio: 1;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -43,6 +42,11 @@
   position: relative;
   z-index: 2;
   background-color: var(--color-bg-primary);
+  flex-shrink: 0;
+}
+
+.node .tech-label {
+  font-size: clamp(0.5rem, 2vw, 0.75rem);
 }
 
 .n-atlas-node {

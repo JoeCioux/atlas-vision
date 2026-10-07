@@ -109,7 +109,7 @@ const Evaluation = () => {
         {/* Hero */}
         <header className="eval-hero">
           <h1>Evaluation & Benchmarks</h1>
-          <p className="hero-subtext">Transparent experimental results for the vision-language cascade.</p>
+          <p className="hero-subtext">Transparent experimental results for the vision-to-language pipeline.</p>
         </header>
 
         {/* Section 1: English Captioning */}

@@ -63,6 +63,12 @@ const Navigation = () => {
         </button>
       </div>
 
+      {/* Mobile Menu Backdrop */}
+      <div 
+        className={`mobile-nav-backdrop ${mobileMenuOpen ? 'open' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+      ></div>
+
       {/* Mobile Menu Drawer */}
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav-links">

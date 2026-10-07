@@ -16,12 +16,21 @@
 
 /* LEFT: Step Navigator */
 .step-navigator {
-  flex: 0 0 350px;
+  flex: none;
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   padding: var(--spacing-4) 0;
-  overflow-y: auto;
+  overflow-y: visible;
+}
+
+@media (min-width: 1024px) {
+  .step-navigator {
+    flex: 0 0 350px;
+    width: auto;
+    overflow-y: auto;
+  }
 }
 
 .nav-timeline-line {
@@ -154,7 +163,6 @@
 /* RIGHT: Isometric Diagram Area */
 .iso-diagram-area {
   flex: 1;
-  /* Replaced dark block with a light glass frame */
   background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
@@ -166,6 +174,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 280px;
+}
+
+@media (min-width: 768px) {
+  .iso-diagram-area {
+    min-height: 350px;
+  }
 }
 
 .iso-scene {
@@ -265,6 +280,20 @@
   padding: 4px 10px;
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
+  transition: opacity var(--transition-normal);
+}
+
+@media (max-width: 768px) {
+  .node-label {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .active-node .node-label {
+    opacity: 1;
+  }
+  .iso-node:hover .node-label {
+    opacity: 1;
+  }
 }
 
 /* Basic Cube Construction */

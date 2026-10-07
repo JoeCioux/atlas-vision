@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronRight, Zap, Image as ImageIcon, Box, Layers, Globe, AlignLeft } from 'lucide-react';
 import './ArchitectureFlow.css';
@@ -45,7 +45,7 @@ const steps = [
     number: '05',
     label: 'STAGE A (ENGLISH)',
     desc: 'Generates the intermediate semantic meaning in English as a robust foundational representation.',
-    status: 'CASCADE',
+    status: 'PIPELINE',
     icon: AlignLeft,
     highlights: ['stage-a']
   },
@@ -54,7 +54,7 @@ const steps = [
     number: '06',
     label: 'STAGE B (TRANSFER)',
     desc: 'Translates the semantic concept from the English embedding space to the target language token space.',
-    status: 'CASCADE',
+    status: 'PIPELINE',
     icon: Globe,
     highlights: ['stage-a', 'stage-b']
   },
@@ -71,6 +71,23 @@ const steps = [
 
 const ArchitectureFlow = () => {
   const [activeStep, setActiveStep] = useState(null); // idle by default
+  const diagramRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width } = entry.contentRect;
+        // design width is 600
+        const newScale = width / 600;
+        setScale(newScale < 1 ? newScale : 1);
+        setIsMobile(width < 480);
+      }
+    });
+    if (diagramRef.current) observer.observe(diagramRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleStepClick = (id) => {
     setActiveStep(activeStep === id ? null : id);
@@ -144,10 +161,22 @@ const ArchitectureFlow = () => {
       </div>
 
       {/* RIGHT: ISOMETRIC DIAGRAM */}
-      <div className={`iso-diagram-area ${!activeStep ? 'idle-mode' : ''}`}>
-        <div className="iso-scene">
-          
-          {/* Background structural planes */}
+      <div className={`iso-diagram-area ${!activeStep ? 'idle-mode' : ''}`} ref={diagramRef}>
+        <div className="iso-scene-wrapper" style={{ 
+          width: '100%', 
+          height: `${500 * scale}px`,
+          position: 'relative',
+          overflow: 'visible'
+        }}>
+          <div className="iso-scene" style={{ 
+            transform: `scale(${scale})`, 
+            transformOrigin: 'top left',
+            position: 'absolute',
+            top: 0,
+            left: 0
+          }}>
+            
+            {/* Background structural planes */}
           <div className="iso-plane layer-vision">
             <span className="plane-label">VISION LAYER</span>
           </div>
@@ -164,7 +193,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">IMAGE INPUT</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'image' ? '1' : 'IMAGE INPUT'}
+            </div>
           </div>
 
           {/* Connector: Image -> SigLIP */}
@@ -179,7 +210,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">FROZEN ENCODER</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'siglip' ? '2' : 'FROZEN ENCODER'}
+            </div>
           </div>
 
           {/* Connector: SigLIP -> MLP */}
@@ -194,7 +227,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">MLP PROJECTOR</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'mlp' ? '3' : 'MLP PROJECTOR'}
+            </div>
           </div>
 
           {/* Connector: MLP -> N-ATLAS */}
@@ -209,7 +244,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">LANGUAGE BACKBONE</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'natlas' ? '4' : 'LANGUAGE BACKBONE'}
+            </div>
           </div>
 
           {/* Connector: N-ATLAS -> Stage A */}
@@ -224,7 +261,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">ENGLISH DESC.</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'stage-a' ? '5' : 'ENGLISH DESC.'}
+            </div>
           </div>
 
           {/* Connector: Stage A -> Stage B */}
@@ -239,7 +278,9 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">LANGUAGE TRANSFER</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'stage-b' ? '6' : 'LANGUAGE TRANSFER'}
+            </div>
           </div>
 
           {/* Connector: Stage B -> Output */}
@@ -254,9 +295,12 @@ const ArchitectureFlow = () => {
               <div className="cube-left"></div>
               <div className="cube-right"></div>
             </div>
-            <div className="node-label">IG / HA / YO</div>
+            <div className="node-label">
+              {isMobile && activeStep !== 'target' ? '7' : 'IG / HA / YO'}
+            </div>
           </div>
 
+        </div>
         </div>
       </div>
       

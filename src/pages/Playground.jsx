@@ -291,14 +291,14 @@ const Playground = () => {
                   <div className="atlas-avatar pulsing">
                     <Sparkles size={16} color="white" />
                   </div>
-                  <div className="processing-cascade">
-                    <div className={`cascade-step ${processStep >= 1 ? 'active' : ''}`}>
+                  <div className="processing-pipeline">
+                    <div className={`pipeline-step ${processStep >= 1 ? 'active' : ''}`}>
                       <span className="step-dot"></span> Vision Extraction
                     </div>
-                    <div className={`cascade-step ${processStep >= 2 ? 'active' : ''}`}>
+                    <div className={`pipeline-step ${processStep >= 2 ? 'active' : ''}`}>
                       <span className="step-dot"></span> English Grounding
                     </div>
-                    <div className={`cascade-step ${processStep >= 3 ? 'active' : ''}`}>
+                    <div className={`pipeline-step ${processStep >= 3 ? 'active' : ''}`}>
                       <span className="step-dot"></span> Native Language Transfer
                     </div>
                   </div>

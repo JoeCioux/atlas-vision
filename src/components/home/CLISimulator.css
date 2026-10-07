@@ -48,9 +48,10 @@
   padding: var(--spacing-5);
   flex-grow: 1;
   overflow-x: auto;
-  font-size: 0.85rem; /* 13px-14px */
+  font-size: 13px;
   line-height: 1.6;
   color: var(--color-text-primary);
+  white-space: pre;
 }
 
 .cli-line {
