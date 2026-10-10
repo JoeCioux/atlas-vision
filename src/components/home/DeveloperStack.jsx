@@ -13,9 +13,9 @@ const ANATOMY = [
   { layer: 'Foundation LLM', value: 'N-ATLaS 8B' },
   { layer: 'Vision Encoder', value: 'SigLIP 2' },
   { layer: 'Python SDK', value: 'testatlasvision (PyPI)' },
-  { layer: 'Client Class', value: 'TestAtlasVision' },
+  { layer: 'GitHub Repo', value: 'github.com/justphemi/testatlassdk' },
   { layer: 'Quantization', value: '4-bit (bitsandbytes)' },
-  { layer: 'Reproducibility', value: 'Colab smoke_test.ipynb' },
+  { layer: 'Smoke Test', value: 'Google Colab notebook' },
   { layer: 'Model Weights', value: 'huggingface.co/Modularcomputing/AtlasVision' },
 ];
 

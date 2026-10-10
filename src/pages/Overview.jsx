@@ -36,7 +36,7 @@ const PLATFORM_LINKS = [
   {
     name: 'Google Colab',
     description: 'Reproduce the model or run your own experiments with our notebooks.',
-    to: '#',
+    to: 'https://colab.research.google.com/drive/1NK-6oyUtzAxENgmUsD_UjO5wZAMogPt5',
     internal: false,
   },
   {
@@ -48,7 +48,7 @@ const PLATFORM_LINKS = [
   {
     name: 'GitHub',
     description: 'SDK source, examples and documentation.',
-    to: '#',
+    to: 'https://github.com/justphemi/testatlassdk',
     internal: false,
   },
 ];
@@ -478,7 +478,7 @@ const Overview = () => {
               <Link to="/playground" className="btn-primary">
                 Open Playground <ArrowRight size={16} />
               </Link>
-              <a href="#" className="btn-secondary">
+              <a href="https://github.com/justphemi/testatlassdk" target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 <Code size={16} /> GitHub
               </a>
               <a href="https://huggingface.co/Modularcomputing/AtlasVision" target="_blank" rel="noopener noreferrer" className="btn-secondary">

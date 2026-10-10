@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/atlas/:path*",
+      "destination": "/api/atlas/[...path]"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
