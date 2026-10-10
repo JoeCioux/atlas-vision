@@ -22,14 +22,14 @@ function AppLayout() {
   const isPlayground = location.pathname === '/playground';
 
   return (
-    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', height: isPlayground ? '100dvh' : 'auto', overflow: isPlayground ? 'hidden' : 'auto' }}>
+    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
       <div className="aurora-bg">
         <div className="aurora-blob blob-1"></div>
         <div className="aurora-blob blob-2"></div>
         <div className="aurora-blob blob-3"></div>
       </div>
       <Navigation />
-      <main style={{ flex: 1, height: isPlayground ? 'calc(100dvh - 72px)' : 'auto' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 'calc(100dvh - 72px)' }}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Overview />} />

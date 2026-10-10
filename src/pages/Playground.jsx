@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, ArrowUp, X, Copy, RefreshCw, Languages, Zap, MessageSquare, Sparkles } from 'lucide-react';
 import './Playground.css';
 
+import { askAboutImage, askText, toImageFile } from '../lib/atlasApi';
+
 import imgMarket from '../assets/market_scene.png';
 import imgTextile from '../assets/textile_fashion.png';
 import imgTransport from '../assets/everyday_transport.png';
@@ -35,10 +37,11 @@ const Playground = () => {
   const [processStep, setProcessStep] = useState(0); 
   const [showEnglishFor, setShowEnglishFor] = useState(null); 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [coldHint, setColdHint] = useState(false);
 
   const fileInputRef = useRef(null);
-  const scrollRef = useRef(null);
   const textareaRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -48,9 +51,7 @@ const Playground = () => {
   }, [prompt]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [conversation, processStep]);
 
   const handleMouseMove = (e) => {
@@ -102,53 +103,75 @@ const Playground = () => {
     reader.readAsDataURL(file);
   };
 
-  const simulateResponse = () => {
+  const coldHintTimer = useRef(null);
+
+  // Fire a real request at the AtlasVision API through the same-origin proxy.
+  // req: { imageSrc, question, lang } for vision calls, { prompt } for text-only.
+  const runRequest = async (req) => {
     setIsProcessing(true);
     setProcessStep(1);
+    setColdHint(false);
+    clearTimeout(coldHintTimer.current);
+    coldHintTimer.current = setTimeout(() => setColdHint(true), 15000);
 
-    setTimeout(() => setProcessStep(2), 1000);
-    setTimeout(() => setProcessStep(3), 2500);
+    const id = Date.now();
 
-    setTimeout(() => {
-      setIsProcessing(false);
-      setProcessStep(0);
-      
-      const responseText = targetLang === 'yo' 
-        ? "Ọjà gbangba tí ó kún fún àwọn oníṣòwò tí ń ta èso tútù àti aṣọ aláràbarà lábẹ́ oòrùn ọ̀sán."
-        : targetLang === 'ig'
-        ? "Ahịa mepere emepe ebe ndị na-ere ahịa na-ere mkpụrụ osisi ọhụrụ na akwa nwere ụcha mara mma n'okpuru anwụ ehihie."
-        : "Kasuwar buɗe wadda ke cike da masu sayarwa suna sayar da sabbin 'ya'yan itace da yadudduka masu launi daban-daban a ƙarƙashin ranar rana.";
+    try {
+      let content;
+      let english = null;
+      let lang = req.lang || 'en';
+
+      if (req.imageSrc) {
+        setProcessStep(2);
+        const file = await toImageFile(req.imageSrc);
+        setProcessStep(3);
+        const result = await askAboutImage(file, req.question, lang);
+        content = result.answer || result.caption || '';
+        english = result.english_answer || null;
+      } else {
+        setProcessStep(3);
+        const result = await askText(req.prompt);
+        content = result.answer || '';
+        lang = 'text';
+      }
 
       setConversation(prev => [
-        ...prev, 
-        { 
-          id: Date.now(),
-          role: 'atlas', 
-          lang: targetLang,
-          content: responseText,
-          english: "A bustling outdoor market scene with vendors selling fresh produce and brightly colored fabrics under the afternoon sun."
-        }
+        ...prev,
+        { id, role: 'atlas', lang, content, english, request: req }
       ]);
-    }, 4000);
+    } catch (err) {
+      setConversation(prev => [
+        ...prev,
+        { id, role: 'error', content: err.message || 'The request failed. Try again.' }
+      ]);
+    } finally {
+      clearTimeout(coldHintTimer.current);
+      setColdHint(false);
+      setIsProcessing(false);
+      setProcessStep(0);
+    }
   };
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
     if ((!image && !prompt.trim()) || isProcessing) return;
 
+    const question = prompt.trim();
+    const request = { imageSrc: image, question, lang: targetLang, prompt: question };
+
     setConversation(prev => [
       ...prev,
       {
         id: Date.now(),
         role: 'user',
-        content: prompt.trim(),
+        content: question,
         image: image
       }
     ]);
 
     setPrompt('');
     setImage(null);
-    simulateResponse();
+    runRequest(request);
   };
 
   const handleKeyDown = (e) => {
@@ -191,7 +214,7 @@ const Playground = () => {
         )}
       </AnimatePresence>
 
-      <div className="chat-viewport" ref={scrollRef}>
+      <div className="chat-viewport">
         {conversation.length === 0 ? (
           <div className="empty-state-workspace">
             <div className="playground-glow-bg"></div>
@@ -223,7 +246,9 @@ const Playground = () => {
           </div>
         ) : (
           <div className="messages-container">
-            {conversation.map((msg) => (
+            {conversation.map((msg) => {
+              const langMeta = LANGUAGES[msg.lang] || { name: 'Text', color: 'var(--color-lang-en)', bg: 'rgba(138, 148, 166, 0.1)' };
+              return (
               <div key={msg.id} className={`message-row ${msg.role}`}>
                 
                 {msg.role === 'user' ? (
@@ -231,17 +256,17 @@ const Playground = () => {
                     {msg.image && <img src={msg.image} alt="User upload" className="msg-img-attachment" />}
                     {msg.content && <p className="msg-text">{msg.content}</p>}
                   </div>
-                ) : (
+                ) : msg.role === 'atlas' ? (
                   <div className="message-bubble atlas-bubble">
                     <div className="atlas-avatar">
                       <Zap size={16} color="white" />
                     </div>
                     <div className="atlas-response-content">
                       <div className="lang-indicator">
-                        <span className="lang-badge" style={{ backgroundColor: LANGUAGES[msg.lang].bg, color: LANGUAGES[msg.lang].color, borderColor: LANGUAGES[msg.lang].color }}>
+                        <span className="lang-badge" style={{ backgroundColor: langMeta.bg, color: langMeta.color, borderColor: langMeta.color }}>
                           {msg.lang.toUpperCase()}
                         </span>
-                        {LANGUAGES[msg.lang].name}
+                        {langMeta.name}
                       </div>
                       
                       <div className="typing-effect">
@@ -266,7 +291,12 @@ const Playground = () => {
                         <button className="action-icon-btn" title="Copy" onClick={() => navigator.clipboard.writeText(msg.content)}>
                           <Copy size={14} />
                         </button>
-                        <button className="action-icon-btn" title="Regenerate">
+                        <button
+                          className="action-icon-btn"
+                          title="Regenerate"
+                          disabled={isProcessing || !msg.request}
+                          onClick={() => msg.request && runRequest(msg.request)}
+                        >
                           <RefreshCw size={14} />
                         </button>
                         {msg.lang !== 'en' && (
@@ -281,9 +311,20 @@ const Playground = () => {
                       </div>
                     </div>
                   </div>
+                ) : (
+                  <div className="message-bubble atlas-bubble error-bubble">
+                    <div className="atlas-avatar error-avatar">
+                      <Zap size={16} color="white" />
+                    </div>
+                    <div className="atlas-response-content">
+                      <span className="tech-label error-label">REQUEST FAILED</span>
+                      <p className="msg-text">{msg.content}</p>
+                    </div>
+                  </div>
                 )}
               </div>
-            ))}
+              );
+            })}
             
             {isProcessing && (
               <div className="message-row atlas">
@@ -301,10 +342,23 @@ const Playground = () => {
                     <div className={`pipeline-step ${processStep >= 3 ? 'active' : ''}`}>
                       <span className="step-dot"></span> Native Language Transfer
                     </div>
+                    <AnimatePresence>
+                      {coldHint && (
+                        <motion.p
+                          className="cold-start-hint"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          The service scales to zero when idle — this first call is starting the GPU and can take up to 10 minutes. Later calls are fast.
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
         )}
       </div>
@@ -363,7 +417,7 @@ const Playground = () => {
           </div>
         </div>
         <div className="composer-footer mt-2">
-          <p>Atlas Vision can make mistakes. Verify important translations.</p>
+          <p>Atlas Vision can make mistakes. Verify important translations. The first call after idle can take a few minutes.</p>
         </div>
       </div>
     </div>

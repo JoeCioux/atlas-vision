@@ -8,8 +8,8 @@ const Architecture = () => {
       <div className="container architecture-page-container">
         
         <header className="arch-header">
-          <h1 className="section-title">HOW ATLAS SEES AND SPEAKS</h1>
-          <p className="section-subtitle">Bridging vision and Nigerian languages through an optimized pipeline.</p>
+          <h1 className="section-title">EXTENDING N-ATLAS INTO THE VISUAL DOMAIN</h1>
+          <p className="section-subtitle">The full pipeline, from raw pixels to Igbo, Hausa and Yoruba — and why English sits in the middle.</p>
         </header>
 
         {/* ONLY The Architecture Interactive Flow */}

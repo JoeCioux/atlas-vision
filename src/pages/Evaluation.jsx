@@ -108,8 +108,8 @@ const Evaluation = () => {
         
         {/* Hero */}
         <header className="eval-hero">
-          <h1>Evaluation & Benchmarks</h1>
-          <p className="hero-subtext">Transparent experimental results for the vision-to-language pipeline.</p>
+          <h1>Measuring Native-Language Visual Intelligence</h1>
+          <p className="hero-subtext">Numbers, not adjectives: how we check visual fidelity, native-language fluency and semantic transfer — with full transparency.</p>
         </header>
 
         {/* Section 1: English Captioning */}

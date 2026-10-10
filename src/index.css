@@ -235,6 +235,12 @@ a {
 .text-sm { font-size: 0.875rem; }
 .italic { font-style: italic; }
 
+/* Offset for fixed nav — shared by all pages */
+.page-wrapper {
+  padding-top: 72px;
+  position: relative;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;

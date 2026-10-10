@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <h2 className="brand-logo">ATLAS VISION</h2>
-            <p className="brand-tagline">Teaching AI to See.</p>
+            <p className="brand-tagline">An open multimodal stack for native African languages.</p>
             <div className="footer-credits">
               <p className="tech-label">Built on N-ATLAS, SigLIP2 and the open-source ML ecosystem.</p>
             </div>
@@ -25,10 +25,10 @@ const Footer = () => {
           
           <div className="footer-links-group">
             <h3 className="footer-heading">Research</h3>
-            <a href="#" className="footer-link">Team & Contributors</a>
-            <a href="#" className="footer-link">Dataset Access</a>
-            <a href="#" className="footer-link">Ethics & Bias Statement</a>
-            <a href="#" className="footer-link">GitHub Repository</a>
+            <Link to="/architecture" className="footer-link">Approach & Method</Link>
+            <Link to="/evaluation" className="footer-link">Benchmarks</Link>
+            <a href="#roadmap" className="footer-link">Limitations & Roadmap</a>
+            <a href="https://huggingface.co/Modularcomputing/AtlasVision" target="_blank" rel="noopener noreferrer" className="footer-link">Weights & Model Card</a>
           </div>
         </div>
         

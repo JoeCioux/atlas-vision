@@ -14,13 +14,13 @@ const CLISimulator = () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const [langIndex, setLangIndex] = useState(0);
-  const [phase, setPhase] = useState(0); 
+  const [phase, setPhase] = useState(0);
   // 0: start/typing, 1: running, 2: output, 3: pause before next
-  
+
   const [commandTyped, setCommandTyped] = useState("");
-  
+
   const currentLang = LANGUAGES[langIndex];
-  const targetCommand = `atlas-vision describe "market.jpg" --lang ${currentLang.code}`;
+  const targetCommand = `testatlasvision describe "market.jpg" --lang ${currentLang.code}`;
 
   useEffect(() => {
     if (!isInView) return;
@@ -63,11 +63,11 @@ const CLISimulator = () => {
         </div>
         <span className="cli-title">bash</span>
       </div>
-      
+
       <div className="cli-body mono">
         <div className="cli-line">
           <span className="cli-prompt">$</span>
-          
+
           {phase === 0 ? (
             <span className="cli-text text-primary">{commandTyped}</span>
           ) : (
@@ -75,10 +75,10 @@ const CLISimulator = () => {
               <span className="text-primary">atlas-vision</span> describe <span className="text-indigo">"market.jpg"</span> <span className="text-accent">--lang {currentLang.code}</span>
             </span>
           )}
-          
+
           {phase === 0 && <span className="cli-cursor" />}
         </div>
-        
+
         {phase >= 2 && (
           <div className="cli-output mt-4">
             <div className="json-block">

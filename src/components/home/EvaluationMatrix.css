@@ -1,0 +1,148 @@
+.eval-matrix-panel {
+  padding: var(--spacing-2) var(--spacing-5);
+  overflow-x: auto;
+  transition: none;
+}
+
+.eval-matrix-panel:hover {
+  transform: none;
+}
+
+.eval-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+.eval-matrix th,
+.eval-matrix td {
+  padding: var(--spacing-4) var(--spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-hairline);
+}
+
+.eval-matrix thead th {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-tertiary);
+  border-bottom: 1px solid rgba(15, 18, 34, 0.12);
+}
+
+.eval-matrix thead th:not(:first-child),
+.eval-matrix td {
+  text-align: center;
+}
+
+.eval-matrix tbody tr:last-child th,
+.eval-matrix tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.eval-matrix tbody th {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+}
+
+.matrix-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.matrix-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  color: var(--color-accent);
+  background: rgba(0, 135, 81, 0.08);
+  border: 1px solid rgba(0, 135, 81, 0.18);
+}
+
+.matrix-dash {
+  color: var(--color-text-tertiary);
+}
+
+.eval-matrix-note {
+  margin-top: var(--spacing-4);
+  max-width: 620px;
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+}
+
+/* Metric definition cards */
+.eval-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-10);
+}
+
+@media (min-width: 768px) {
+  .eval-metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.eval-metric-card {
+  padding-top: var(--spacing-4);
+  border-top: 2px solid var(--color-text-primary);
+}
+
+.eval-metric-title {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.eval-metric-text {
+  font-size: 0.92rem;
+}
+
+/* Responsive: stack table cells' labels on very small screens */
+@media (max-width: 640px) {
+  .eval-matrix thead {
+    display: none;
+  }
+  .eval-matrix,
+  .eval-matrix tbody,
+  .eval-matrix tr,
+  .eval-matrix th,
+  .eval-matrix td {
+    display: block;
+    min-width: 0;
+  }
+  .eval-matrix tr {
+    padding: var(--spacing-4) 0;
+    border-bottom: 1px solid var(--color-border-hairline);
+  }
+  .eval-matrix tbody tr:last-child {
+    border-bottom: none;
+  }
+  .eval-matrix tbody th {
+    border: none;
+    padding: 0 0 var(--spacing-2);
+  }
+  .eval-matrix td {
+    border: none;
+    padding: 4px 0;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .eval-matrix td::before {
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+  }
+}
